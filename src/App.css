@@ -1,0 +1,52 @@
+body {
+  background-color: #7F6835;
+}
+
+.DraftEditor-root {
+  background-color: #E5C57E;
+  box-shadow: 5px 5px 25px black;
+
+  /*display: inline-block;*/
+  margin: auto;
+  /*margin-top: 100px;*/
+  padding: 50px;
+  height: 200px;
+  width: 1200px;
+
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 35px;
+  font-family: 'Cabin', sans-serif;
+  color: #222;
+
+}
+
+
+.showChanges-button {
+  width: 300px;
+  height: 50px;
+  margin: 50px auto;
+  border-radius: 5px;
+  font-family: 'Cabin', sans-serif;
+  box-shadow: 5px 5px 25px black;
+
+  /*font-weight: bold;*/
+  font-size: 20px;
+  display: block;
+}
+
+.changeList {
+  list-style: none;
+  background-color: #FFD169;
+  font-size: 30px;
+  font-family: 'Cabin';
+  padding: 30px;
+}
+.changeList li {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #F9FFDB;
+  width: 500px;
+  /*color: #FFD983;*/
+}
