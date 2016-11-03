@@ -5,7 +5,7 @@ import Writer from './Writer.js'
 import QuillEditor from './QuillEditor.js'
 import ConceptSelector from './ConceptSelector.js'
 
-
+const plato = "I went down yesterday to the Piraeus with Glaucon"
 
 class App extends Component {
   constructor() {
@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       userText: "",
       changes: [],
-      mode: ['write', 'edit', 'cat']
+      mode: ['write', 'edit', 'cat'],
+      plato: plato
     };
     this.changeMode = this.changeMode.bind(this)
   }
@@ -33,9 +34,11 @@ class App extends Component {
       // Here I would connect with the API
     }
     this.state.mode.shift();
-    // debugger;
   }
 
+  componentDidMount() {
+
+  }
 
   render() {
 
@@ -56,6 +59,9 @@ class App extends Component {
           <ConceptSelector changes={this.state.changes} />
         : null
         }
+        <div contentEditable={true}>
+          {this.state.plato}
+        </div>
       </div>
     );
   }
