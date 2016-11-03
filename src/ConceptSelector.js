@@ -6,12 +6,23 @@ import './App.css';
 class ConceptSelector extends React.Component {
   constructor() {
     super()
+    this.state = {
+      changes: []
+    }
   }
 
   render(){
     return(
       <div>
         this is the concept selector
+        { this.state.changes[0] ?
+           <ul className="changeList">
+             {this.state.changes.map((changeLog, k) => {
+               return <li key={k}> "...{changeLog.changeSnippet}..."</li>
+             })}
+           </ul>
+         : null
+         }
       </div>
     )
   }

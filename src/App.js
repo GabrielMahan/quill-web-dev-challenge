@@ -19,7 +19,8 @@ class App extends Component {
   }
 
   changeMode(data) {
-    console.log('==================')
+    // console.log('==================')
+    // debugger;
     var mode = this.state.mode[0]
     if (mode === 'write') {
       this.setState({userText: data})
@@ -32,7 +33,7 @@ class App extends Component {
       // Here I would connect with the API
     }
     this.state.mode.shift();
-    debugger;
+    // debugger;
   }
 
 
@@ -55,7 +56,6 @@ class App extends Component {
           <ConceptSelector changes={this.state.changes} />
         : null
         }
-        <button onClick={this.changeMode} > Next! -> </button>
       </div>
     );
   }

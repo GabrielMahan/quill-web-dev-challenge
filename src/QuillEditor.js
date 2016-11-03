@@ -2,33 +2,29 @@ import React, { Component } from 'react';
 import './App.css';
 import {Editor, EditorState, RichUtils, ContentState} from 'draft-js';
 
-
-
-
 class QuillEditor extends Component {
   constructor() {
     super();
     this.state = {
       editorState: EditorState.createEmpty(),
       changes: [],
-      editMode: false
     };
     this.onChange = this.onChange.bind(this);
     this.showChanges = this.showChanges.bind(this);
-    // this.enableEdit = this.enableEdit.bind(this);
   }
 
   onChange(editorState) {
-    this.showChanges();
     this.setState({editorState});
+    this.showChanges();
   }
 
-  // enableEdit() {
-  //   this.setState({
-  //     editMode: true,
-  //     editorState: EditorState.createWithContent(ContentState.createFromText(this.state.editorState.getCurrentContent().getPlainText()))
-  //   })
-  // }
+  componentDidMount(){
+    // console.log('the hairy iussue of editing')
+    this.setState({
+      editorState: EditorState.createWithContent(ContentState.createFromText(this.props.seedText))
+    })
+  }
+
 
   getChangeStartIdx(ref, curState) {
     var h = 0;
@@ -74,28 +70,21 @@ class QuillEditor extends Component {
 
     return (
       <div className="App">
+        <div className="prompt"> Please Edit Your Text </div>
         <Editor
           editorState={editorState}
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand}
-          placeholder="Please write some text!"
-          />
+        />
 
-        {this.state.editMode ?
-          <div>
-            <span> Please make edits to your text! </span>
-            { this.state.changes[0] ?
-              <ul className="changeList">
-                {this.state.changes.map((changeLog, k) => {
-                  return <li key={k}> "...{changeLog.changeSnippet}..."</li>
-                })}
-              </ul>
-            : null
-            }
-          </div>
-        : <button className="next-button" onClick={this.enableEdit}> Next -> </button>
-        }
-
+          { this.state.changes[0] ?
+            <ul className="changeList">
+              {this.state.changes.map((changeLog, k) => {
+                return <li key={k}> "...{changeLog.changeSnippet}..."</li>
+              })}
+            </ul>
+          : <span> You didn't make any changes!!! </span>
+          }
       </div>
     );
   }
