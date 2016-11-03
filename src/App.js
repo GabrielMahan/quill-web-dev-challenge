@@ -4,6 +4,7 @@ import './App.css';
 import Writer from './Writer.js'
 import QuillEditor from './QuillEditor.js'
 import ConceptSelector from './ConceptSelector.js'
+// import JsDiff from 'diff'
 
 const plato = "I went down yesterday to the Piraeus with Glaucon"
 
@@ -13,15 +14,12 @@ class App extends Component {
     this.state = {
       userText: "",
       changes: [],
-      mode: ['write', 'edit', 'cat'],
-      plato: plato
+      mode: ['write', 'edit', 'cat']
     };
     this.changeMode = this.changeMode.bind(this)
   }
 
   changeMode(data) {
-    // console.log('==================')
-    // debugger;
     var mode = this.state.mode[0]
     if (mode === 'write') {
       this.setState({userText: data})
@@ -37,7 +35,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
   }
 
   render() {
@@ -59,13 +56,20 @@ class App extends Component {
           <ConceptSelector changes={this.state.changes} />
         : null
         }
-        <div contentEditable={true}>
-          {this.state.plato}
-        </div>
       </div>
     );
   }
 }
 
-
 export default App;
+// Here's the content editable attempt
+// <div contentEditable>
+//   {this.state.plato}
+// </div>
+
+
+this.setState({
+  plato: this.state.plato.split(/\s/).map((word, i) => {
+    return `<${i}>${word}</${i}>`
+  }).join
+})
