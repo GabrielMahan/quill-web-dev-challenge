@@ -11,6 +11,7 @@ class QuillEditor extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.showChanges = this.showChanges.bind(this);
+    this.sendUp = () => this.props.changeMode(this.state.changes)
   }
 
   onChange(editorState) {
@@ -77,14 +78,15 @@ class QuillEditor extends Component {
           handleKeyCommand={this.handleKeyCommand}
         />
 
-          { this.state.changes[0] ?
-            <ul className="changeList">
-              {this.state.changes.map((changeLog, k) => {
-                return <li key={k}> "...{changeLog.changeSnippet}..."</li>
-              })}
-            </ul>
-          : <span> You didn't make any changes!!! </span>
-          }
+        { this.state.changes[0] ?
+          <ul className="changeList">
+            {this.state.changes.map((changeLog, k) => {
+              return <li key={k}> "...{changeLog.changeSnippet}..."</li>
+            })}
+          </ul>
+        : <span> You didn't make any changes!!! </span>
+        }
+        <button onClick={this.sendUp } > next </button>
       </div>
     );
   }

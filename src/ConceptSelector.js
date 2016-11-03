@@ -11,6 +11,10 @@ class ConceptSelector extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({changes: this.props.changes})
+  }
+
   render(){
     return(
       <div>
