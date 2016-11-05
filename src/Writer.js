@@ -16,7 +16,7 @@ class Writer extends React.Component {
       editorState: EditorState.moveFocusToEnd(this.state.editorState)
     })
   }
-  
+
   sendUp() {
     this.props.changeMode(this.state.editorState.getCurrentContent().getPlainText())
   }

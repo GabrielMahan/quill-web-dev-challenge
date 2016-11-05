@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Editor, EditorState, RichUtils, ContentState} from 'draft-js';
+import {Editor, EditorState, RichUtils, ContentState, Modifier} from 'draft-js';
 
 class QuillEditor extends Component {
   constructor() {
@@ -8,84 +8,55 @@ class QuillEditor extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       changes: [],
+      diffData: []
     };
     this.onChange = this.onChange.bind(this);
     this.showChanges = this.showChanges.bind(this);
     this.sendUp = () => this.props.changeMode(this.state.changes)
+    this.diff = require('diff')
   }
 
   onChange(editorState) {
-    this.setState({editorState});
+    let currentStyle = editorState.getCurrentInlineStyle();
+    this.setState({editorState: EditorState.setInlineStyleOverride(editorState, currentStyle.add('SPECIAL'))})
     this.showChanges();
   }
 
+  showChanges() {
+    let before = this.props.seedText;
+    let after = this.state.editorState.getCurrentContent().getPlainText();
+    let diffData = this.diff.diffChars(before, after)
+    this.setState({diffData: diffData});
+
+    function wasChanged(value) {
+      return value.added || value.removed
+    }
+    let changes = diffData.filter(wasChanged)
+    console.log(changes)
+    this.setState({changes: changes})
+  }
+
   componentDidMount(){
-    // console.log('the hairy iussue of editing')
     this.setState({
       editorState: EditorState.createWithContent(ContentState.createFromText(this.props.seedText))
     })
   }
 
 
-  getChangeStartIdx(ref, curState) {
-    var h = 0;
-    while (ref[h] === curState[h] && h < curState.length) {
-      h++;
-    }
-    return h
-  }
-
-  showChanges() {
-    let finalText = this.state.editorState.getCurrentContent().getPlainText()
-    var stack = this.state.editorState.getUndoStack();
-    var cur = stack._head;
-
-    if (!cur) {
-      return 'no changes'
-    }
-
-    var textStateAry = [{
-      text: finalText,
-      changeSnippet: finalText.substr(this.getChangeStartIdx(cur.value.getPlainText(), finalText) - 10, 30)
-    }];
-
-    while (cur.next) {
-      let curText = cur.value.getPlainText();
-      let nextText = cur.next.value.getPlainText();
-
-      textStateAry.push({
-        text: curText,
-        changeSnippet: curText.substr(this.getChangeStartIdx(nextText, curText) - 10, 30)
-      })
-      cur = cur.next
-    }
-    textStateAry.forEach( (o) => {
-      console.log(o.changeSnippet);
-    });
-    this.setState({changes: textStateAry});
-    return textStateAry;
-  }
 
   render() {
     const {editorState} = this.state;
-
+    const styleMap = {'SPECIAL': { color: 'darkorchid', fontWeight: 'bold'},};
     return (
       <div className="App">
         <div className="prompt"> Please Edit Your Text </div>
         <Editor
+          ref="editor"
+          customStyleMap={styleMap}
           editorState={editorState}
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand}
         />
-
-        { this.state.changes[0] ?
-          <ul className="changeList">
-            {this.state.changes.map((changeLog, k) => {
-              return <li key={k}> "...{changeLog.changeSnippet}..."</li>
-            })}
-          </ul>
-        : <span> You didn't make any changes!!! </span>
-        }
         <button onClick={this.sendUp } > next </button>
       </div>
     );

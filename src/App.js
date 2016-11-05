@@ -6,9 +6,9 @@ import QuillEditor from './QuillEditor.js'
 import ConceptSelector from './ConceptSelector.js'
 // import JsDiff from 'diff'
 
-const plato = "I went down yesterday to the Piraeus with Glaucon"
+// const plato = "I went down yesterday to the Piraeus with Glaucon"
 
-class App extends Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -68,8 +68,8 @@ export default App;
 // </div>
 
 
-this.setState({
-  plato: this.state.plato.split(/\s/).map((word, i) => {
-    return `<${i}>${word}</${i}>`
-  }).join
-})
+// this.setState({
+//   plato: this.state.plato.split(/\s/).map((word, i) => {
+//     return `<${i}>${word}</${i}>`
+//   }).join
+// })

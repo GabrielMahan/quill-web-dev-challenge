@@ -21,7 +21,7 @@ class ConceptSelector extends React.Component {
   }
 
   handleSubmit(e) {
-    debugger;
+    debugger; 
   }
 
   handleChange(data) {
