@@ -28,6 +28,7 @@ class App extends React.Component {
     else if (mode === 'cat') {
       // fetch(url, data)....
       // Here I would connect with the API
+      debugger;
     }
     this.state.mode.shift();
   }
