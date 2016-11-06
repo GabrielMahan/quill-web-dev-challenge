@@ -16,11 +16,11 @@ class ConceptSelector extends React.Component {
   }
 
   componentDidMount() {
-    let diffData = this.props.diffData;
-
     function wasChanged(value) {
       return value.added || value.removed;
     };
+
+    let diffData = this.props.diffData;
     let changes = diffData.filter(wasChanged);
 
     changes.forEach( (change) => {
