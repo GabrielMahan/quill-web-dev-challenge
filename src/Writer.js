@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import {Editor, EditorState, RichUtils, ContentState} from 'draft-js';
+import {Editor, EditorState} from 'draft-js';
 
 
 class Writer extends React.Component {
@@ -22,29 +22,19 @@ class Writer extends React.Component {
   }
 
   render(){
-    const {editorState} = this.state;
     return(
       <div>
-        <div className="prompt"> Please Write Some Text </div>
+        <div className="prompt"> Please write some text in the box below</div>
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
         />
 
-      <button onClick={this.sendUp } > next </button>
+      <button onClick={this.sendUp } className="next-button"> next 	&#8594; </button>
       </div>
     )
   }
 }
 
-
+// const {editorState} = this.state;
 export default Writer;
-
-
-// {this.state.editMode ?
-//   <div>
-//     <span> Please make edits to your text! </span>
-//
-//   </div>
-// : <button className="next-button" onClick={this.enableEdit}> Next -> </button>
-// }

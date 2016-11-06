@@ -1,39 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import {Editor, EditorState, RichUtils, ContentState, Modifier} from 'draft-js';
+import {Editor, EditorState, ContentState} from 'draft-js';
 
-class QuillEditor extends Component {
+class QuillEditor extends React.Component {
   constructor() {
     super();
     this.state = {
       editorState: EditorState.createEmpty(),
-      changes: [],
       diffData: []
     };
     this.onChange = this.onChange.bind(this);
-    this.showChanges = this.showChanges.bind(this);
-    this.sendUp = () => this.props.changeMode(this.state.changes)
-    this.diff = require('diff')
-  }
-
-  onChange(editorState) {
-    let currentStyle = editorState.getCurrentInlineStyle();
-    this.setState({editorState: EditorState.setInlineStyleOverride(editorState, currentStyle.add('SPECIAL'))})
-    this.showChanges();
-  }
-
-  showChanges() {
-    let before = this.props.seedText;
-    let after = this.state.editorState.getCurrentContent().getPlainText();
-    let diffData = this.diff.diffChars(before, after)
-    this.setState({diffData: diffData});
-
-    function wasChanged(value) {
-      return value.added || value.removed
-    }
-    let changes = diffData.filter(wasChanged)
-    console.log(changes)
-    this.setState({changes: changes})
+    this.compileChanges = this.compileChanges.bind(this);
+    this.sendUp = () => this.props.changeMode({diffData: this.state.diffData, editorState: this.state.editorState});
+    this.diff = require('diff');
   }
 
   componentDidMount(){
@@ -41,23 +20,31 @@ class QuillEditor extends Component {
       editorState: EditorState.createWithContent(ContentState.createFromText(this.props.seedText))
     })
   }
+  onChange(editorState) {
+    let currentStyle = editorState.getCurrentInlineStyle();
+    this.setState({editorState: EditorState.setInlineStyleOverride(editorState, currentStyle.add('EDITS'))})
+    this.compileChanges();
+  }
 
-
+  compileChanges() {
+    let before = this.props.seedText;
+    let after = this.state.editorState.getCurrentContent().getPlainText();
+    let diffData = this.diff.diffWords(before, after);
+    this.setState({diffData: diffData});
+  }
 
   render() {
     const {editorState} = this.state;
-    const styleMap = {'SPECIAL': { color: 'darkorchid', fontWeight: 'bold'},};
+    const styleMap = {'EDITS': { color: 'darkorchid', fontWeight: 'bold'},};
     return (
       <div className="App">
         <div className="prompt"> Please Edit Your Text </div>
         <Editor
-          ref="editor"
           customStyleMap={styleMap}
           editorState={editorState}
           onChange={this.onChange}
-          handleKeyCommand={this.handleKeyCommand}
         />
-        <button onClick={this.sendUp } > next </button>
+      <button onClick={this.sendUp} className="next-button"> next 	&#8594;</button>
       </div>
     );
   }

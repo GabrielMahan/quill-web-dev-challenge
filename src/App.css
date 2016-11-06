@@ -2,16 +2,21 @@ body {
   background-color: #00c2a2;
 }
 .prompt {
-  position: absolute;
-  left: 700px;
-  top: 120px;
+  background-color: #e6e6e6;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 30px;
 }
 .DraftEditor-root {
-
   margin: auto;
-  /*margin-top: 100px;*/
-  padding: 150px;
-
+  padding: 50px;
+  padding-bottom: 50px;
+  width: 80%;
+  display: inline-block;
 }
 
 .DraftEditor-editorContainer {
@@ -24,33 +29,77 @@ body {
   min-height: 150px;
   overflow: auto;
   padding: 30px;
+  border: 3px solid gray;
 }
 
 .next-button {
-  width: 300px;
+  width: 200px;
   height: 50px;
-  margin: 50px auto;
+  margin: 50px;
   border-radius: 5px;
   font-family: 'Cabin', sans-serif;
   box-shadow: 5px 5px 25px black;
-
-  /*font-weight: bold;*/
   font-size: 20px;
-  display: block;
+}
+
+.changeContainer {
+  /*display: flex;*/
+  background-color: lightgray;
+  padding: 30px;
+  /*justify-content: center;*/
+
+  /*flex-flow: row wrap;*/
+  /*align-content: flex-end;*/
 }
 
 .changeList {
   list-style: none;
-  background-color: #FFD169;
+  background-color: #f7f5f5;
   font-size: 30px;
   font-family: 'Cabin';
-  padding: 30px;
-}
-.changeList li {
-  margin: 20px;
   padding: 10px;
+  padding-bottom: 20px;
+  /*display: inline-block;*/
+  margin: 10px;
   border-radius: 5px;
-  background-color: #F9FFDB;
-  width: 900px;
-  /*color: #FFD983;*/
+}
+
+.changeList select {
+  margin: 10px;
+  font-size: 30px;
+  float: right;
+}
+
+.changeText {
+  background-color: #f7f5f5;
+  font-size: 30px;
+  font-family: 'Cabin';
+  line-height: 35px;
+  margin: 30px;
+  padding: 10px;
+}
+.changeSnippet {
+  background-color: darkgray;
+  font-family: 'Patrick Hand', cursive;
+  padding: 5px;
+  margin: 10px;
+}
+.tag {
+  /*font-weight: bold;*/
+}
+.add {
+  color: green;
+}
+.del {
+  color: darkorchid;
+}
+.added {
+  color: green;
+  font-weight: bold;
+}
+
+.removed {
+  color: red;
+  text-decoration: line-through;
+  font-weight: bold;
 }
