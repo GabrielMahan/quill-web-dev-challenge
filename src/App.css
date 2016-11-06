@@ -43,31 +43,31 @@ body {
 }
 
 .changeContainer {
-  /*display: flex;*/
   background-color: lightgray;
   padding: 30px;
-  /*justify-content: center;*/
-
-  /*flex-flow: row wrap;*/
-  /*align-content: flex-end;*/
+  max-width: 1000px;
 }
 
 .changeList {
   list-style: none;
   background-color: #f7f5f5;
-  font-size: 30px;
+  font-size: 20px;
   font-family: 'Cabin';
-  padding: 10px;
-  padding-bottom: 20px;
-  /*display: inline-block;*/
+  padding: 1px;
   margin: 10px;
   border-radius: 5px;
 }
 
 .changeList select {
   margin: 10px;
-  font-size: 30px;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 5px;
   float: right;
+  position: relative;
+  box-shadow: 10px 10px 19px -12px rgba(0,0,0,0.75);
+  top: -70px;
+  right: 10px;
 }
 
 .changeText {
@@ -78,21 +78,7 @@ body {
   margin: 30px;
   padding: 10px;
 }
-.changeSnippet {
-  background-color: darkgray;
-  font-family: 'Patrick Hand', cursive;
-  padding: 5px;
-  margin: 10px;
-}
-.tag {
-  /*font-weight: bold;*/
-}
-.add {
-  color: green;
-}
-.del {
-  color: darkorchid;
-}
+
 .added {
   color: green;
   font-weight: bold;
@@ -102,4 +88,28 @@ body {
   color: red;
   text-decoration: line-through;
   font-weight: bold;
+}
+
+.catAdded {
+  color: darkorchid;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: 'Patrick Hand';
+}
+
+.catRemoved {
+  color: crimson;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: 'Patrick Hand';
+}
+
+.divider {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: gray;
+  text-shadow: 1px 2px 3px #666;
+}
+.changeItem {
+  padding-left: 10px;
 }

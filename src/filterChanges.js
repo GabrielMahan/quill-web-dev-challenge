@@ -1,3 +1,4 @@
+import React from 'react';
 
 export default function(rawDiffData) {
   let diffStack = rawDiffData.filter((node) => !node.value.match(/^\s+$/));
@@ -8,15 +9,14 @@ export default function(rawDiffData) {
   var cur = {};
 
   while (diffStack.length > 0) {
-    console.log('DIFF STACK', diffStack)
     cur = diffStack.shift();
     if (diffStack[0]) {
       if ((cur.added || cur.removed) && !diffStack[0].added && !diffStack[0].removed) {
         changeNodes.push(cur);
-        let headText = unchangedHead.value.substr(unchangedHead.value.length - 10) + " ";
-        let tailText = " " + diffStack[0].value.substr(0,10);
-        let beforeText =  headText + changeNodes.filter( (n) => n.removed).map((m) => m.value ).join(' ') + tailText;
-        let afterText = headText + changeNodes.filter((n) => n.added ).map((m) => m.value).join(' ') + tailText;
+        let headText = unchangedHead.value.substr(unchangedHead.value.search(/(\S+|^)\s*$/)) + " ";
+        let tailText = diffStack[0].value.match(/^\s*\S*/)[0];
+        let beforeText =  <span> {headText}  <span className="catRemoved"> {changeNodes.filter( (n) => n.removed).map((m) => m.value ).join(' ')} </span> { tailText} </span>;
+        let afterText =  <span> {headText}  <span className="catAdded"> {changeNodes.filter( (n) => n.added).map((m) => m.value ).join(' ')} </span> { tailText} </span>;
         compactedChangeList.push({
           unchangedHead: unchangedHead,
           unchangedTail: diffStack[0],
@@ -38,9 +38,9 @@ export default function(rawDiffData) {
       if (cur.added || cur.removed) {
         changeNodes.push(cur);
 
-        let headText = unchangedHead.value.substr(unchangedHead.value.length - 10) + " ";
-        let beforeText =  headText + changeNodes.filter( (n) => n.removed).map((m) => m.value ).join(' ');
-        let afterText = headText + changeNodes.filter((n) => n.added ).map((m) => m.value).join(' ');
+        let headText = unchangedHead.value.substr(unchangedHead.value.search(/(\S+|^)\s*$/)) + " ";
+        let afterText =  <span> {headText}  <span className="catAdded"> {changeNodes.filter( (n) => n.added).map((m) => m.value ).join(' ')} </span></span>;
+        let beforeText =  <span> {headText}  <span className="catRemoved"> {changeNodes.filter( (n) => n.removed).map((m) => m.value ).join(' ')} </span> </span>;
 
         compactedChangeList.push({
           unchangedHead: unchangedHead,
@@ -52,6 +52,5 @@ export default function(rawDiffData) {
       }
     }
   }
-
   return compactedChangeList
 }

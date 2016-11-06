@@ -59,8 +59,7 @@ class ConceptSelector extends React.Component {
              {this.state.compactedChangeList.map((change, j) => {
                 return (
                   <div key={j} className="changeList">
-                    <p className="before">BEFORE::: {change.beforeText}</p>
-                    <p className="after">AFTER::: {change.afterText}</p>
+                    <p className="changeItem"> {change.beforeText}  <span className="divider">  //  </span> {change.afterText}</p>
                     <select
                       name={change.changeNodes.map( (n) => n.value).join() }
                       value={this.state.data[change]}
