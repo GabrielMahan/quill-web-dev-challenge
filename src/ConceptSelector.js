@@ -16,13 +16,59 @@ class ConceptSelector extends React.Component {
   }
 
   componentDidMount() {
+    let diffData = this.props.diffData;
+    let diffStack = this.props.diffData.filter((node) => !node.value.match(/^\s+$/));
+    debugger;
+    // Loop: run through the stack,
+    // push changes into a changeList arrray until you hit an unchanged element
+    // When you hit that unchaned element, empty the changeList, and throw a bunch of info into a changeObject that goes into the changes.
+    var unchangedHead = {value: ""};
+    var changeNodes = [];
+    var compactedChangeList = [];
+    var cur = {};
+
+    while (diffStack.length > 0) {
+      console.log('DIFF STACK', diffStack)
+      cur = diffStack.shift();
+      if (diffStack[0]) {
+        if ((cur.added || cur.removed) && !diffStack[0].added && !diffStack[0].removed) {
+          changeNodes.push(cur);
+          compactedChangeList.push({
+            unchangedHead: unchangedHead,
+            unchangedTail: diffStack[0],
+            changeNodes: changeNodes
+          })
+          unchangedHead = diffStack[0];
+          changeNodes = [];
+        }
+        else if (cur.added || cur.removed) {
+          changeNodes.push(cur)
+        }
+        else {
+          unchangedHead = cur;
+        }
+      }
+      else {
+        if (cur.added || cur.removed) {
+          changeNodes.push(cur);
+          compactedChangeList.push({
+            unchangedHead: unchangedHead,
+            unchangedTail: {value: ""},
+            changeNodes: changeNodes
+          })
+        }
+      }
+    }
+
+
+    debugger;
+
+
     function wasChanged(value) {
       return value.added || value.removed;
     };
 
-    let diffData = this.props.diffData;
     let changes = diffData.filter(wasChanged);
-
     changes.forEach( (change) => {
       this.setState({data: Object.defineProperty(this.state.data, change.value, {
         value: this.state.concepts[0],
@@ -31,8 +77,7 @@ class ConceptSelector extends React.Component {
       })})
     })
     this.setState({changes: changes, diffData: diffData})
-
-    debugger;
+    // debugger;
 
   }
 
