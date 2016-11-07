@@ -43,7 +43,7 @@ body {
 }
 
 .editAlert {
-  background-color: #9c2bde;
+  background-color: #9B6BAB;
   color: #f7f5f5;
   border: 3px solid #f7f5f5;
 }
@@ -85,12 +85,12 @@ body {
 }
 
 .added {
-  color: green;
+  color: darkorchid;
   font-weight: bold;
 }
 
 .removed {
-  color: red;
+  color: crimson;
   text-decoration: line-through;
   font-weight: bold;
 }

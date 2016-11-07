@@ -49,7 +49,7 @@ class QuillEditor extends React.Component {
           editorState={editorState}
           onChange={this.onChange}
         />
-      <button onClick={this.sendUp} className="next-button editAlert"> next 	&#8594;</button>
+      <button onClick={this.sendUp} className="next-button"> next 	&#8594;</button>
       </div>
     );
   }
