@@ -1,7 +1,8 @@
 import React from 'react';
 
-export default function(compactedChangeList) {
+// Groups consecutive changes of only commas together
 
+export default function(compactedChangeList) {
   var filteredChanges = [];
   var consecutiveCommaChanges = [];
 
@@ -30,7 +31,7 @@ export default function(compactedChangeList) {
 
 function groupCommas(changeList) {
   // brace yourself for some ugly JSX mapping...
-  // groups the changes into one, and it constructs new appropiate beforeText and afterText so that it will render nice 
+  // reduces the changes into one change object and constructs new appropiate before/after Text so that it will render nicely
   let groupedChange = {};
   let first = changeList[0];
   let last = changeList[changeList.length  - 1];

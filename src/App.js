@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 
-import Writer from './Writer.js'
-import QuillEditor from './QuillEditor.js'
-import ConceptSelector from './ConceptSelector.js'
+import ConceptSelector from './ConceptSelector.js';
+import QuillEditor from './QuillEditor.js';
+import Writer from './Writer.js';
 
 // This is the top level component and controls the view
 // There are three 'modes', write, edit, and categorize (cat)
