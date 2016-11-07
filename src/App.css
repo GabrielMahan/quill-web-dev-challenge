@@ -42,6 +42,9 @@ body {
   font-size: 20px;
 }
 
+.editAlert {
+  background-color: #E1FF69;
+}
 .changeContainer {
   background-color: lightgray;
   padding: 30px;
@@ -112,4 +115,12 @@ body {
 }
 .changeItem {
   padding-left: 10px;
+}
+.noChanges {
+  width: 80%;
+  margin: auto;
+  height: 60px;
+  background-color: #f7f5f5;
+  font-size: 30px;
+  text-align: center;
 }

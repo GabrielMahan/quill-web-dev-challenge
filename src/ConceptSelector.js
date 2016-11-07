@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import filterChanges from './filterChanges.js'
+import filterChanges from './filterChanges.js';
+import groupCommaChanges from './groupCommaChanges.js';
 
 class ConceptSelector extends React.Component {
   constructor() {
@@ -14,17 +15,23 @@ class ConceptSelector extends React.Component {
     this.handleSubmit = () => this.props.changeMode(this.state.data);
     this.handleChange = this.handleChange.bind(this);
     this.setDefaults = this.setDefaults.bind(this);
-    this.diff = require('diff')
   }
 
   componentDidMount() {
     let diffData = this.props.diffData;
+
+    // Filters changes to make the list of changs more intuitive (groups adjacent changes, removes trivial changes)
     let compactedChangeList = filterChanges(diffData);
+
+    // optional -- group consecutive changes that are only comma additions as a single change.
+    compactedChangeList = groupCommaChanges(compactedChangeList);
+
     this.setDefaults(compactedChangeList);
     this.setState({diffData: diffData, compactedChangeList: compactedChangeList})
   }
 
   setDefaults(changeList) {
+    // sets form data in state at default
     changeList.forEach( (change) => {
       this.setState({data: Object.defineProperty(this.state.data, change.changeNodes.map( (n) => n.value).join(), {
         value: this.state.concepts[0],
@@ -35,6 +42,7 @@ class ConceptSelector extends React.Component {
   }
 
   handleChange(change) {
+    // updates state with form data
     this.setState({data: Object.defineProperty(this.state.data, change.target.name, {
       configurable: true,
       value: change.target.value,
@@ -43,6 +51,7 @@ class ConceptSelector extends React.Component {
   }
 
   render(){
+    // Shows the whole passage with tracked changes at the top of the page, and the edits for categorization below.
     return(
       <div>
         <div className="prompt"> Review your changes and categorize them </div>
@@ -73,7 +82,7 @@ class ConceptSelector extends React.Component {
                )
              })}
           </div>
-          : <span> You didn't make any changes.... </span>
+          : <div className="noChanges"> You didn't make any changes.... </div>
           }
          <button className="next-button" type="submit" onClick={this.handleSubmit}> Submit Your Changes 	&#8594;</button>
       </div>

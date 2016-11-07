@@ -5,6 +5,9 @@ import Writer from './Writer.js'
 import QuillEditor from './QuillEditor.js'
 import ConceptSelector from './ConceptSelector.js'
 
+// This is the top level component and controls the view
+// There are three 'modes', write, edit, and categorize (cat)
+
 class App extends React.Component {
   constructor() {
     super();
@@ -16,6 +19,7 @@ class App extends React.Component {
     };
     this.changeMode = this.changeMode.bind(this)
   }
+
 
   changeMode(data) {
     var mode = this.state.mode[0]
@@ -31,9 +35,6 @@ class App extends React.Component {
       debugger;
     }
     this.state.mode.shift();
-  }
-
-  componentDidMount() {
   }
 
   render() {
